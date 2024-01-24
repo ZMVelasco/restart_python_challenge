@@ -19,4 +19,18 @@ def ordered_range():
 smaller_number, bigger_number = ordered_range()
 print(f"The range you picked is {smaller_number} - {bigger_number}")
 
+def get_prime_numbers(smaller_number, bigger_number):
+    with open("prime_numbers.txt", "w") as file:
+        file.write(f"These are all the prime numbers from the range you picked:\n")
+        for number in range(smaller_number, bigger_number + 1):
+            if number > 1:
+                for i in range(2, number):
+                    if (number % i) == 0:
+                        break
+                else:
+                    print(number)
+                    file.write(f"{number}\n")
 
+print("These are all the prime numbers from the range you picked:")
+get_prime_numbers(smaller_number, bigger_number)
+print("The resulting prime numbers have been saved in a file called prime_numbers.txt")
