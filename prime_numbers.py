@@ -12,6 +12,7 @@ pink = Fore.HOT_PINK_2
 pink_2 = Fore.HOT_PINK_3B
 pale_violet_red = Fore.PALE_VIOLET_RED_1
 red = Fore.INDIAN_RED_1B
+dark_sea_green = Fore.DARK_SEA_GREEN_1
 reset_color = '\x1b[0m'
 
 print(plum + "You can choose a range between 1 and 1000, for example 1-250, from which you will get all the prime numbers." + reset_color)
@@ -32,12 +33,27 @@ def ordered_range():
             break
     return smaller_number, bigger_number
 
-smaller_number, bigger_number = ordered_range()
-print(pink + "The range you picked is " + pale_violet_red + f"{smaller_number} - {bigger_number}" + reset_color)
+# Function for letting the user pick the name of the file
+def pick_file_name():
+    while True:
+        file_name = input(dark_sea_green + "Enter the name of the .txt file where you want to save the prime numbers (i.e. prime_numbers.txt), or press enter for a default name: " + reset_color)
+        file_name = file_name or "prime_numbers.txt"
+
+        if not file_name.endswith(".txt"):
+            print(red + "The file name is not valid, it should end with .txt, please try again" + reset_color)
+            continue
+        break
+    return file_name
 
 # This function will get the prime numbers from the range the user picked and it will save them in a file called prime_numbers.txt.
 def get_prime_numbers(smaller_number, bigger_number):
-    with open("prime_numbers.txt", "w") as file:
+    global file_name #Turn file name into a global variable so that the prompt can have the actual file name chosen
+
+    print(pink + "The range you picked is " + pale_violet_red + f"{smaller_number} - {bigger_number}" + reset_color)
+    file_name = pick_file_name()
+
+    print(blue + "These are all the prime numbers from the range you picked:" + reset_color)
+    with open(file_name, "w") as file:
         file.write(f"These are all the prime numbers from the range you picked:\n")
         for number in range(smaller_number, bigger_number + 1):
             if number > 1:
@@ -48,6 +64,7 @@ def get_prime_numbers(smaller_number, bigger_number):
                     print(pink_2 + str(number) + reset_color)
                     file.write(f"{number}\n")
 
-print(blue + "These are all the prime numbers from the range you picked:" + reset_color)
+smaller_number, bigger_number = ordered_range()
+
 get_prime_numbers(smaller_number, bigger_number)
-print(blue + "The resulting prime numbers have been saved in a file called prime_numbers.txt" + reset_color)
+print(dark_sea_green + f"The resulting prime numbers have been saved in a file called {file_name}" + reset_color)
